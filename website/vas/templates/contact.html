@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content   %}
+
+    <br/>
+    <h1>  {{ contact.first_name }} {{ contact.last_name }} </h1>  
+    <hr/>
+
+
+    <p> Name: {{ contact.first_name }} </p>
+    <p> Last Name: {{ contact.last_name }} </p>
+    <p> Email: {{ contact.email }} </p>
+    <p> Phone: {{ contact.phone }} </p>
+    <p> Address1: {{ contact.address1 }} </p>
+    <p> Address2: {{ contact.address2 }} </p>
+    <p> City: {{ contact.city }} </p>
+    <p> County: {{ contact.county }} </p>
+    <p> Postcode: {{ contact.postcode }} </p>
+    <p> Country: {{ contact.country }} </p>
+
+{% endblock  %}
+
