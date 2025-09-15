@@ -3,8 +3,11 @@
 
 {% block content   %}
 
-<h1> Hello World </h1>  
-<p> This is my base template </p>
+    <h1> Hello World </h1>  
 
-{% endblock  %}
+    {% for contact in contacts %}
+        <p>{{ contact.first_name }} , {{ contact.last_name }}</p>
+    {% endfor %}
+
+{% endblock content %}
 
