@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404 
+from django.shortcuts import render, get_object_or_404 , redirect
 from .models import Contact
+from django.contrib import  messages
+
 
 # Homepage.
 def home(request):
@@ -13,3 +15,12 @@ def about(request):
 def contact(request, id):
     contact = get_object_or_404(Contact, id=id)
     return render(request, 'contact.html', {'contact': contact})
+
+#Delete a contact
+def delete_contact(request, id):
+    contact = get_object_or_404(Contact, id=id)
+    names =f"{contact.first_name} {contact.last_name}"
+    contact.delete()
+    messages.success(request, f'Contact "{names}" deleted successfully.')
+    return redirect('home')
+
