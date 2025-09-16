@@ -14,8 +14,7 @@ class UpdateContact(forms.ModelForm):
     county = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': "County", 'class': 'form-control'}), max_length=100, required=False)
     postcode = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': "Postcode", 'class': 'form-control'}), max_length=20, required=False)
     country = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': "Country", 'class': 'form-control'}), max_length=100, required=False)
-
+    image = forms.ImageField(label="", widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}), required=False)
     class Meta:
         model = Contact
-        fields = ['first_name', 'last_name', 'email', 'phone', 'address1', 'address2', 'city', 'county', 'postcode', 'country']
- 
+        fields = ['first_name', 'last_name', 'email', 'phone', 'address1', 'address2', 'city', 'county', 'postcode', 'country', 'image']

@@ -2,40 +2,41 @@
 
 {% block content   %}
 
-    <br/>
-    <h1>  {{ contact.first_name }} {{ contact.last_name }} </h1>  
-    <hr/>
+        <!-- Card -->
+        <div class="card">
+            <div class="card-header">
+                {{ contact.first_name }} {{ contact.last_name }}
+            </div>
+                    
+            <div class="card-body">
+                
+                {% if contact.image %}
+                    <img src="{{ contact.image.url }}" width=200><br/>
+                {% endif %}
+                <br/>
 
-    <!-- Card  -->
-    <div class="card">
-        <h5 class="card-header"> {{ contact.first_name }} {{ contact.last_name }} </h5>
-        <!-- Card Body -->
-        <div class="card-body">
+                <strong>Email:</strong> {{ contact.email }}<br/>
+                <strong>Phone:</strong> {{ contact.phone }}<br/>
+                <strong>Address1:</strong> {{ contact.address1 }}<br/>
+                <strong>Address2:</strong> {{ contact.address2 }}<br/>
+                <strong>City:</strong> {{ contact.city }}<br/>
+                <strong>County:</strong> {{ contact.county }} <br/>
+                <strong>Postcode:</strong> {{ contact.postcode }}<br/>
+                <strong>Country:</strong> {{ contact.country }}<br/>
+                <br/>
+                <a href="{% url 'home' %}" class="btn btn-outline-secondary mt-3">Back</a>
+                <a href="{% url 'delete_contact' contact.id %}" class="btn btn-danger mt-3">Delete</a>
+                
+            </div>
+        </div>  <!-- End Card -->
+        <br/><br/>
 
-            <strong>Name:</strong> {{ contact.first_name }} <br/>
-            <strong>Last Name:</strong> {{ contact.last_name }} <br/>
-            <strong>Email:</strong> {{ contact.email }} <br/>
-            <strong>Phone:</strong> {{ contact.phone }} <br/>
-            <strong>Address1:</strong> {{ contact.address1 }} <br/>
-            <strong>Address2:</strong> {{ contact.address2 }} <br/>
-            <strong>City:</strong> {{ contact.city }} <br/>
-            <strong>County:</strong> {{ contact.county }} <br/>
-            <strong>Postcode:</strong> {{ contact.postcode }} <br/>
-            <strong>Country:</strong> {{ contact.country }} <br/>
-            <br/>
-            <a href="{% url 'home' %}" class="btn btn-outline-secondary mt-3">Back</a>
-            <a href="{% url 'delete_contact' contact.id %}" class="btn btn-danger mt-3">Delete</a>
-        </div>
-    </div>
-    <br/>
-    <h2>Update Contact</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-secondary">Update</button>
-    </form>
-
-    
+        <h2>Update Contact</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-secondary">Update</button>
+       </form>
 
 {% endblock  %}
 

@@ -15,7 +15,7 @@ def about(request):
 #Individual contact page.
 def contact(request, id):
     contact = get_object_or_404(Contact, id=id)
-    form = UpdateContact(request.POST or None, instance=contact)
+    form = UpdateContact(request.POST or None, request.FILES or None, instance=contact)
     if form.is_valid():
         form.save()
         messages.success(request, 'Contact updated successfully.')
