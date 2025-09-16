@@ -3,7 +3,17 @@
 {% block content   %}
 
     <h1>  Register </h1>  
-    <p> This is my register page </p>
+    <br/>
+
+    <form method="POST" action="{% url 'register' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary">Register</button>   
+    </form> <!-- end of Form -->
+
+    <br/
+
+    <p> Already have an account? <a href="{% url 'login' %}">Login here</a></p>
 
 {% endblock  %}
 
