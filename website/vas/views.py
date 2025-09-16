@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404 , redirect
 from .models import Contact
 from django.contrib import  messages
-from .forms import UpdateContact
+from .forms import UpdateContact, SignUpForm
 from django.contrib.auth import authenticate, login, logout 
 
 
@@ -29,7 +29,25 @@ def logout_user(request):
 
 #register
 def register_user(request):
-    return render(request, 'register.html', {})
+    form = SignUpForm()
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #log user in
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            #authenticate the user
+            user = authenticate(username=username, password=password)
+            #log them in
+            login(request, user)
+            messages.success(request, "You have successfully registered!")      
+            return redirect('home')
+        else:
+            messages.error(request, "There was an error registering. Please try again...")
+            return redirect('register')
+    else:
+        return render(request, 'register.html', {'form': form})
 
 
 # Homepage.
