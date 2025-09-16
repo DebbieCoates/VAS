@@ -37,6 +37,7 @@
                 <td>{{ contact.county }}</td>
                 <td>{{ contact.postcode }}</td>
                 <td>{{ contact.country }}</td>
+                <td><a href="{% url 'delete_contact' contact.id %}" class = 'btn btn-sm btn-danger'>Delete</a></td>
             </tr>
             {% endfor %}
           
