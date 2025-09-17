@@ -1,13 +1,31 @@
-from django.shortcuts import render, get_object_or_404 , redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact
-from django.contrib import  messages
-from .forms import UpdateContact, SignUpForm
-from django.contrib.auth import authenticate, login, logout 
+from django.contrib import messages
+from .forms import UpdateContact, SignUpForm,  UpdateUserForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 
 
+# Update User
 def update_user(request):
-    return render(request, 'update_user.html', {})
+	if request.user.is_authenticated:
+		# Get current user
+		current_user = User.objects.get(id=request.user.id)
+		# Create our form
+		user_form = UpdateUserForm(request.POST or None, instance=current_user)
+	
+		if user_form.is_valid():
+			# Update and Save user info
+			user_form.save()
+			# Log user back in
+			login(request, current_user)
+			messages.success(request, "Your User Info Has Been Updated!")
+			return redirect('home')
+		return render(request, 'update_user.html', {'user_form':user_form})
+	else:
+		messages.success(request, "Must Be Logged In To View That Page...")
+		return redirect('login')
 
 def update_password(request):
     return render(request, 'update_password.html', {})
