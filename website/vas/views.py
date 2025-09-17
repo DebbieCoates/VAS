@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Contact
 from django.contrib import messages
-from .forms import UpdateContact, SignUpForm,  UpdateUserForm
+from .forms import UpdateContact, SignUpForm,  UpdateUserForm, ChangePasswordForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-
 
 
 # Update User
@@ -28,7 +27,36 @@ def update_user(request):
 		return redirect('login')
 
 def update_password(request):
-    return render(request, 'update_password.html', {})
+	if request.user.is_authenticated:
+		#get the current user
+		current_user = request.user
+		
+		# Did they post? Or are they viewing the page
+		if request.method == "POST":
+			# Define our form
+			form = ChangePasswordForm(current_user, request.POST)
+			# is form valid
+			if form.is_valid():
+				#save the form info
+				form.save()
+				# re-login the user
+				login(request,current_user)
+				# Success message
+				messages.success(request, "Your Password Has Been Updated!")
+				return redirect('update_user')
+			else:
+				# loop thru error messages
+				for error in list(form.errors.values()):
+					messages.error(request, error)
+					return redirect('update_password')
+		else:
+			# Define our form
+			form = ChangePasswordForm(current_user)
+			return render(request, 'update_password.html', {"form":form})
+
+	else:
+		messages.success(request, "You Must Be Logged In To View That Page...")
+		return redirect('home')
    
    
 #login
