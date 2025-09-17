@@ -5,6 +5,14 @@ from .forms import UpdateContact, SignUpForm
 from django.contrib.auth import authenticate, login, logout 
 
 
+
+def update_user(request):
+    return render(request, 'update_user.html', {})
+
+def update_password(request):
+    return render(request, 'update_password.html', {})
+   
+   
 #login
 def login_user(request):
         if request.method == "POST":
